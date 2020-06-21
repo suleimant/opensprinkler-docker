@@ -5,11 +5,10 @@ ENV LANG C.UTF-8
 ########################################
 FROM base-img as build-img
 
-RUN apk --no-cache add git  bash ca-certificates g++
+RUN apk --no-cache add git  bash ca-certificates g++ libmosquitto-dev
 
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     cd OpenSprinkler-Firmware && \
-RUN apk --no-cache add libmosquitto-dev
     ./build.sh -s demo
 
 ########################################
