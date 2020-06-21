@@ -3,7 +3,7 @@
 FROM i386/debian as build-img
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get install -y git bash ca-certificates g++ libmosquitto-dev
+RUN apt-get update && apt-get install -y git bash ca-certificates g++ libmosquitto-dev
 
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     cd OpenSprinkler-Firmware && \
