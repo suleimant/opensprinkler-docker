@@ -1,34 +1,38 @@
-FROM  i386/alpine as base-img
+FROM alpine:3.12.0 as base
 
 ########################################
-FROM i386/debian as build-img
-ENV DEBIAN_FRONTEND noninteractive
+## 1st stage builds OS for RPi
+FROM base as build
 
-RUN apt-get update && apt-get install -y git bash ca-certificates g++ libmosquitto-dev
+WORKDIR /OpenSprinkler
+
+RUN apk --no-cache add git bash ca-certificates g++ mosquitto-dev
 
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     cd OpenSprinkler-Firmware && \
-    ./build.sh -s demo
+    ./build.sh -s ospi
 
 ########################################
-FROM base-img
+## 2nd stage is minimal runtime + executable
+FROM base
 
-RUN apk --no-cache add  libstdc++ mosquitto mosquitto-clients && \
-    mkdir /OpenSprinkler && \
-    mkdir -p /data/logs && \
-    cd /OpenSprinkler && \
-    ln -s /data/stns.dat && \
-    ln -s /data/nvm.dat && \
-    ln -s /data/ifkey.txt && \
-    ln -s /data/logs
 
-COPY --from=build-img /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprinkler
 WORKDIR /OpenSprinkler
+
+RUN apk --no-cache add libstdc++ && \
+  mkdir -p /data/logs && \
+  ln -s /data/stns.dat && \
+  ln -s /data/nvm.dat && \
+  ln -s /data/ifkey.txt && \
+  ln -s /data/logs
+
+COPY --from=build /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprinkler
 
 #-- Logs and config information go into the volume on /data
 VOLUME /data
 
 #-- OpenSprinkler interface is available on 8080
-EXPOSE 80
+EXPOSE 8080
 
+#-- By default, start OS using /data for saving data/NVM/log files
 CMD [ "./OpenSprinkler" ]
