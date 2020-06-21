@@ -1,3 +1,4 @@
+FROM  i386/alpine as base-img
 
 ########################################
 FROM i386/debian as build-img
@@ -10,11 +11,9 @@ RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     ./build.sh -s demo
 
 ########################################
-FROM  i386/debian as base-img
-ENV DEBIAN_FRONTEND noninteractive
-ENV LANG C.UTF-8
+FROM base-img
 
-RUN  apt-get update && apt-get install -y libstdc++ libmosquitto-dev && \
+RUN apk --no-cache add  libstdc++ mosquitto mosquitto-clients && \
     mkdir /OpenSprinkler && \
     mkdir -p /data/logs && \
     cd /OpenSprinkler && \
