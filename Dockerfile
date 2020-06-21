@@ -1,18 +1,18 @@
-FROM  i386/alpine as base-img
-
-ENV LANG C.UTF-8
 
 ########################################
-FROM base-img as build-img
+FROM i386/debian as build-img
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN apk --no-cache add git  bash ca-certificates g++ libmosquitto-dev
+RUN apt-get install -y git bash ca-certificates g++ libmosquitto-dev
 
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     cd OpenSprinkler-Firmware && \
     ./build.sh -s demo
 
 ########################################
-FROM base-img
+FROM  i386/alpine as base-img
+
+ENV LANG C.UTF-8
 
 RUN apk --no-cache add  libstdc++ && \
     mkdir /OpenSprinkler && \
