@@ -1,13 +1,12 @@
-FROM alpine:3.12.0 as base
+FROM i386/alpine as base
 
 ########################################
 ## 1st stage builds OS for RPi
 FROM base as build
 
-WORKDIR /OpenSprinkler
+WORKDIR /OpenSprinkler-Firmware
 
-RUN apk --no-cache add git bash ca-certificates g++ mosquitto-dev
-
+RUN apk --no-cache add git bash ca-certificates g++ mosquitto-dev 
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     cd OpenSprinkler-Firmware && \
     ./build.sh -s ospi
