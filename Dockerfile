@@ -13,7 +13,7 @@ RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
 FROM  i386/ubuntu
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
-RUN apt-get install -y  apt-utils libc-ares2 libmosquitto-dev libmosquitto1 libstdc++ && \
+RUN apt-get install -y  apt-utils libc-ares2 libmosquitto-dev libmosquitto1 && \
     mkdir /OpenSprinkler && \
     mkdir -p /data/logs && \
     cd /OpenSprinkler && \
@@ -27,10 +27,8 @@ RUN apt-get install -y  apt-utils libc-ares2 libmosquitto-dev libmosquitto1 libs
     ln -s /data/ifkey.txt && \
     ln -s /data/logs 
 
-WORKDIR /OpenSprinkler
-
 COPY --from=build /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprinkler
-
+WORKDIR /OpenSprinkler
 
 #-- Logs and config information go into the volume on /data
 VOLUME /data
