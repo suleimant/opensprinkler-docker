@@ -5,18 +5,15 @@ FROM i386/alpine as base
 FROM base as build
 
 WORKDIR /OpenSprinkler-Firmware
-
 RUN apk --no-cache add git bash ca-certificates g++ mosquitto-dev 
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     cd OpenSprinkler-Firmware && \
-    ./build.sh -s ospi
+    ./build.sh -s demo
 
 ########################################
 ## 2nd stage is minimal runtime + executable
 FROM base
 
-
-WORKDIR /OpenSprinkler
 
 RUN apk --no-cache add libstdc++ && \
   mkdir -p /data/logs && \
@@ -26,6 +23,7 @@ RUN apk --no-cache add libstdc++ && \
   ln -s /data/logs
 
 COPY --from=build /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprinkler
+WORKDIR /OpenSprinkler
 
 #-- Logs and config information go into the volume on /data
 VOLUME /data
