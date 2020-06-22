@@ -1,11 +1,12 @@
-FROM i386/alpine as base
+FROM amd64/debian as base
 
 ########################################
 ## 1st stage builds OS for RPi
 FROM base as build
 
 WORKDIR /OpenSprinkler-Firmware
-RUN apk --no-cache add git bash ca-certificates g++ mosquitto-dev 
+RUN apt-get update 
+RUN apt-get install -y git bash ca-certificates g++ mosquitto-dev 
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     cd OpenSprinkler-Firmware && \
     ./build.sh -s demo
@@ -14,8 +15,8 @@ RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
 ## 2nd stage is minimal runtime + executable
 FROM base
 
-
-RUN apk --no-cache add libstdc++ && \
+RUN apt-get update 
+RUN apt-get install -y libstdc++ && \
     mkdir /OpenSprinkler && \
     mkdir -p /data/logs && \
     cd /OpenSprinkler && \
