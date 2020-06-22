@@ -1,12 +1,10 @@
-FROM balenalib/i386-ubuntu-python as base
+FROM i386/debian as base
 ENV DEBIAN_FRONTEND noninteractive
 
 ########################################
 ## 1st stage builds OS for RPi
 FROM base as build
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update 
-RUN apt-get install -y git apt-utils bash ca-certificates g++ mosquitto-dev 
+RUN apt-get update  
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     cd OpenSprinkler-Firmware && \
     ./build.sh -s demo
@@ -14,8 +12,6 @@ RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
 ########################################
 ## 2nd stage is minimal runtime + executable
 FROM base
-ENV DEBIAN_FRONTEND noninteractive
-
 RUN apt-get update 
 RUN apt-get install -y libstdc++ && \
     mkdir /OpenSprinkler && \
