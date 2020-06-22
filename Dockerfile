@@ -3,7 +3,7 @@ FROM amd64/debian as base
 ########################################
 ## 1st stage builds OS for RPi
 FROM base as build
-
+ENV DEBIAN_FRONTEND noninteractive
 WORKDIR /OpenSprinkler-Firmware
 RUN apt-get update 
 RUN apt-get install -y git apt-utils bash ca-certificates g++ mosquitto-dev 
@@ -14,6 +14,7 @@ RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
 ########################################
 ## 2nd stage is minimal runtime + executable
 FROM base
+ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update 
 RUN apt-get install -y libstdc++ && \
