@@ -14,7 +14,7 @@ FROM  i386/ubuntu
 ENV DEBIAN_FRONTEND noninteractive
 WORKDIR /OpenSprinkler
 RUN apt-get update
-RUN apt-get install -y  apt-utils libstdc++ && \
+RUN apt-get install -y  apt-utils && \
     mkdir -p /data/logs && \
     cd /OpenSprinkler && \
     ln -s /data/stns.dat && \
