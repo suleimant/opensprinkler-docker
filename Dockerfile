@@ -1,10 +1,10 @@
 FROM amd64/debian as base
+ENV DEBIAN_FRONTEND noninteractive
 
 ########################################
 ## 1st stage builds OS for RPi
 FROM base as build
 ENV DEBIAN_FRONTEND noninteractive
-WORKDIR /OpenSprinkler-Firmware
 RUN apt-get update 
 RUN apt-get install -y git apt-utils bash ca-certificates g++ mosquitto-dev 
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
@@ -27,7 +27,6 @@ RUN apt-get install -y libstdc++ && \
     ln -s /data/logs
 
 COPY --from=build /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprinkler
-WORKDIR /OpenSprinkler
 
 #-- Logs and config information go into the volume on /data
 VOLUME /data
