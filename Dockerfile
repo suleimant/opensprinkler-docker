@@ -16,7 +16,7 @@ RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
 
 FROM  base
 RUN apt-get update
-RUN apt-get install mosquitto-dev && \
+RUN apt-get install -y mosquitto-dev && \
     mkdir /OpenSprinkler && \
     mkdir -p /data/logs && \
     cd /OpenSprinkler && \
