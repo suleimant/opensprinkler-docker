@@ -6,7 +6,7 @@ FROM base as build
 
 WORKDIR /OpenSprinkler-Firmware
 RUN apt-get update 
-RUN apt-get install -y git bash ca-certificates g++ mosquitto-dev 
+RUN apt-get install -y git apt-utils bash ca-certificates g++ mosquitto-dev 
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     cd OpenSprinkler-Firmware && \
     ./build.sh -s demo
