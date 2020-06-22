@@ -3,7 +3,7 @@
 FROM i386/ubuntu as build
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
-RUN apt-get install -y git  bash ca-certificates g++
+RUN apt-get install -y apt-utils git  bash ca-certificates g++
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     cd OpenSprinkler-Firmware && \
     ./build.sh -s demo
@@ -14,7 +14,7 @@ FROM  i386/ubuntu
 ENV DEBIAN_FRONTEND noninteractive
 WORKDIR /OpenSprinkler
 RUN apt-get update
-RUN apt-get install -y  libstdc++ && \
+RUN apt-get install -y  apt-utils libstdc++ && \
     mkdir -p /data/logs && \
     cd /OpenSprinkler && \
     ln -s /data/stns.dat && \
