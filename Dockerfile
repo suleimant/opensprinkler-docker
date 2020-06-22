@@ -1,19 +1,22 @@
 FROM i386/debian as base
-ENV DEBIAN_FRONTEND noninteractive
+
 
 ########################################
 ## 1st stage builds OS for RPi
 FROM base as build
-RUN apt-get update  
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update
+RUN apt-get install -y git  bash ca-certificates g++
 RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
     cd OpenSprinkler-Firmware && \
     ./build.sh -s demo
 
 ########################################
 ## 2nd stage is minimal runtime + executable
-FROM base
-RUN apt-get update 
-RUN apt-get install -y libstdc++ && \
+
+FROM  i386/alpine
+RUN apk update
+RUN apk --no-cache add  libstdc++ && \
     mkdir /OpenSprinkler && \
     mkdir -p /data/logs && \
     cd /OpenSprinkler && \
@@ -23,12 +26,13 @@ RUN apt-get install -y libstdc++ && \
     ln -s /data/logs
 
 COPY --from=build /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprinkler
+WORKDIR /OpenSprinkler
 
 #-- Logs and config information go into the volume on /data
 VOLUME /data
 
 #-- OpenSprinkler interface is available on 8080
-EXPOSE 8080
+EXPOSE 80
 
-#-- By default, start OS using /data for saving data/NVM/log files
 CMD [ "./OpenSprinkler" ]
+
