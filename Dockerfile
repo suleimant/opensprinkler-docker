@@ -11,6 +11,7 @@ RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
 ########################################
 ## 2nd stage is minimal runtime + executable
 FROM  i386/alpine
+WORKDIR /OpenSprinkler
 RUN apk update
 RUN apk --no-cache add  libstdc++ mosquitto-dev mosquitto-libs && \
     mkdir /OpenSprinkler && \
@@ -22,7 +23,7 @@ RUN apk --no-cache add  libstdc++ mosquitto-dev mosquitto-libs && \
     ln -s /data/logs
 
 COPY --from=build /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprinkler
-WORKDIR /OpenSprinkler
+
 
 #-- Logs and config information go into the volume on /data
 VOLUME /data
