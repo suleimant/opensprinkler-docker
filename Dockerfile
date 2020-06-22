@@ -14,7 +14,7 @@ FROM  i386/ubuntu
 ENV DEBIAN_FRONTEND noninteractive
 WORKDIR /OpenSprinkler
 RUN apt-get update
-RUN apt-get install -y  libstdc++ mosquitto-dev mosquitto-libs && \
+RUN apt-get install -y  libstdc++ && \
     mkdir -p /data/logs && \
     cd /OpenSprinkler && \
     ln -s /data/stns.dat && \
