@@ -1,4 +1,4 @@
-FROM i386/debian as base
+FROM balenalib/i386-ubuntu-python as base
 ENV DEBIAN_FRONTEND noninteractive
 
 ########################################
