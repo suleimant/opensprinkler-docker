@@ -16,7 +16,7 @@ RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
 
 FROM  i386/alpine
 RUN apk update
-RUN apk --no-cache add  libstdc++ && \
+RUN apk --no-cache add  libstdc++ mosquitto-dev && \
     mkdir /OpenSprinkler && \
     mkdir -p /data/logs && \
     cd /OpenSprinkler && \
