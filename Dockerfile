@@ -16,11 +16,13 @@ FROM base
 
 
 RUN apk --no-cache add libstdc++ && \
-  mkdir -p /data/logs && \
-  ln -s /data/stns.dat && \
-  ln -s /data/nvm.dat && \
-  ln -s /data/ifkey.txt && \
-  ln -s /data/logs
+    mkdir /OpenSprinkler && \
+    mkdir -p /data/logs && \
+    cd /OpenSprinkler && \
+    ln -s /data/stns.dat && \
+    ln -s /data/nvm.dat && \
+    ln -s /data/ifkey.txt && \
+    ln -s /data/logs
 
 COPY --from=build /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprinkler
 WORKDIR /OpenSprinkler
