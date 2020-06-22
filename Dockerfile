@@ -1,4 +1,4 @@
-FROM amd64/debian as base
+FROM i386/debian as base
 ENV DEBIAN_FRONTEND noninteractive
 
 ########################################
