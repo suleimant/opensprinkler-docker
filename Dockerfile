@@ -14,7 +14,6 @@ FROM  i386/alpine
 WORKDIR /OpenSprinkler
 RUN apk update
 RUN apk --no-cache add  libstdc++ mosquitto-dev mosquitto-libs && \
-    mkdir /OpenSprinkler && \
     mkdir -p /data/logs && \
     cd /OpenSprinkler && \
     ln -s /data/stns.dat && \
