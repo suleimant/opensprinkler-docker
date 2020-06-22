@@ -10,10 +10,11 @@ RUN git clone https://github.com/OpenSprinkler/OpenSprinkler-Firmware.git && \
 
 ########################################
 ## 2nd stage is minimal runtime + executable
-FROM  i386/alpine
+FROM  i386/ubuntu
+ENV DEBIAN_FRONTEND noninteractive
 WORKDIR /OpenSprinkler
-RUN apk update
-RUN apk --no-cache add  libstdc++ mosquitto-dev mosquitto-libs && \
+RUN apt-get update
+RUN apt-get install -y  libstdc++ mosquitto-dev mosquitto-libs && \
     mkdir -p /data/logs && \
     cd /OpenSprinkler && \
     ln -s /data/stns.dat && \
