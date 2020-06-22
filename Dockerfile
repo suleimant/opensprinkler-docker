@@ -1,6 +1,6 @@
 ########################################
 ## 1st stage builds OS for RPi
-FROM i386/debian as build
+FROM i386/ubuntu as build
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 RUN apt-get install -y git  bash ca-certificates g++
