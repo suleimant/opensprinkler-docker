@@ -27,10 +27,10 @@ RUN apt-get install -y  apt-utils libc-ares2 libmosquitto-dev libmosquitto1 && \
     ln -s /data/ifkey.txt
 
 COPY --from=build /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprinkler
-WORKDIR /OpenSprinkler
+WORKDIR /OpenSprinkler 
 
 #-- Logs and config information go into the volume on /data
-VOLUME /data
+VOLUME /data /OpenSprinkler/logs
 
 #-- OpenSprinkler interface is available on 8080
 EXPOSE 80
