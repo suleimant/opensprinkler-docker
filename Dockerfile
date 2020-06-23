@@ -30,7 +30,7 @@ COPY --from=build /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprin
 WORKDIR /OpenSprinkler
 
 #-- Logs and config information go into the volume on /data
-VOLUME /data /Opensprinkler/logs
+VOLUME /data
 
 #-- OpenSprinkler interface is available on 8080
 EXPOSE 80
