@@ -15,13 +15,14 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 RUN apt-get install -y  apt-utils libc-ares2 libmosquitto-dev libmosquitto1 && \
     mkdir  /OpenSprinkler && \
-    cd /OpenSprinkler
-    
+    mkdir -p /data && \
+    cd /OpenSprinkler && \
+    ln -s /data
 COPY --from=build /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprinkler
 WORKDIR /OpenSprinkler 
 
 #-- Logs and config information go into the volume on /data
-VOLUME /OpenSprinkler
+VOLUME /data 
 
 #-- OpenSprinkler interface is available on 8080
 EXPOSE 80
