@@ -14,9 +14,9 @@ FROM  i386/ubuntu
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 RUN apt-get install -y  apt-utils libc-ares2 libmosquitto-dev libmosquitto1 && \
-    mkdir -p /OpenSprinkler && \
-    mkdir -p /data/logs && \
-    touch /data/logs/newfile.txt &&\
+    mkdir -p /OpenSprinkler/logs && \
+    mkdir -p /data && \
+    touch /OpenSprinkler/logs/newfile.txt &&\
     cd /OpenSprinkler && \
     ln -s /data/sopts.dat && \
     ln -s /data/prog.dat && \
