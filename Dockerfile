@@ -15,9 +15,13 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 RUN apt-get install -y  apt-utils libc-ares2 libmosquitto-dev libmosquitto1 && \
     mkdir  /OpenSprinkler && \
-    mkdir -p /data && \
+    mkdir -p /data/logs && \
     cd /OpenSprinkler && \
-    ln -s /data
+    ln -s /data/stns.dat && \
+    ln -s /data/nvm.dat && \
+    ln -s /data/ifkey.txt && \
+    ln -s /data/logs
+    
 COPY --from=build /OpenSprinkler-Firmware/OpenSprinkler /OpenSprinkler/OpenSprinkler
 WORKDIR /OpenSprinkler 
 
